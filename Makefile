@@ -18,5 +18,8 @@ blur_3x3: blur_3x3.cpp
 likwid_test: likwid_test.c
 	${CC} -fopenmp -DLIKWID_PERFMON -L ${LIKWID_LIB} -I ${LIKWID_INCLUDE} $^ -o $@ -llikwid
 
+perf_test: perf_example.c
+	${CC} $^ -o $@
+
 clean:
-	rm -f blur_3x3 likwid_test
+	rm -f blur_3x3 likwid_test perf_test
