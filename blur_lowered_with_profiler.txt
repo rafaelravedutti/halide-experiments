@@ -1,0 +1,118 @@
+register_destructor("halide_profiler_pipeline_end", halide_profiler_get_state())
+allocate profiling_func_names[(void *) * 3]
+profiling_func_names[0] = "overhead"
+profiling_func_names[1] = "blur_y"
+profiling_func_names[2] = "blur_x"
+allocate profiling_func_stack_peak_buf[uint64 * 3]
+profiling_func_stack_peak_buf[0] = (uint64)0
+profiling_func_stack_peak_buf[1] = (uint64)0
+profiling_func_stack_peak_buf[2] = (uint64)8704
+let profiler_token = halide_profiler_pipeline_start("blur_y", 3, profiling_func_names)
+assert((0 <= profiler_token), profiler_token)
+let profiler_state = halide_profiler_get_state()
+let profiler_pipeline_state = halide_profiler_get_pipeline_state("blur_y")
+halide_profiler_incr_active_threads(profiler_state)
+halide_profiler_stack_peak_update(profiler_pipeline_state, profiling_func_stack_peak_buf)
+assert((reinterpret(uint64, blur_y.buffer) != (uint64)0), halide_error_buffer_argument_is_null("blur_y"))
+assert((reinterpret(uint64, b0.buffer) != (uint64)0), halide_error_buffer_argument_is_null("b0"))
+let b0 = _halide_buffer_get_host(b0.buffer)
+let b0.type.code = _halide_buffer_get_type_code(b0.buffer)
+let b0.type.bits = _halide_buffer_get_type_bits(b0.buffer)
+let b0.type.lanes = _halide_buffer_get_type_lanes(b0.buffer)
+let b0.min.0 = _halide_buffer_get_min(b0.buffer, 0)
+let b0.extent.0 = _halide_buffer_get_extent(b0.buffer, 0)
+let b0.stride.0 = _halide_buffer_get_stride(b0.buffer, 0)
+let b0.min.1 = _halide_buffer_get_min(b0.buffer, 1)
+let b0.extent.1 = _halide_buffer_get_extent(b0.buffer, 1)
+let b0.stride.1 = _halide_buffer_get_stride(b0.buffer, 1)
+let blur_y = _halide_buffer_get_host(blur_y.buffer)
+let blur_y.type.code = _halide_buffer_get_type_code(blur_y.buffer)
+let blur_y.type.bits = _halide_buffer_get_type_bits(blur_y.buffer)
+let blur_y.type.lanes = _halide_buffer_get_type_lanes(blur_y.buffer)
+let blur_y.min.0 = _halide_buffer_get_min(blur_y.buffer, 0)
+let blur_y.extent.0 = _halide_buffer_get_extent(blur_y.buffer, 0)
+let blur_y.stride.0 = _halide_buffer_get_stride(blur_y.buffer, 0)
+let blur_y.min.1 = _halide_buffer_get_min(blur_y.buffer, 1)
+let blur_y.extent.1 = _halide_buffer_get_extent(blur_y.buffer, 1)
+let blur_y.stride.1 = _halide_buffer_get_stride(blur_y.buffer, 1)
+let b0.extent.0.required.s = ((min(((((blur_y.extent.0 + -1)/8)*8) + 8), blur_y.extent.0) + blur_y.min.0) - min(blur_y.min.0, ((blur_y.min.0 + blur_y.extent.0) + -8)))
+let b0.min.0.required.s = min(blur_y.min.0, ((blur_y.min.0 + blur_y.extent.0) + -8))
+let blur_y.extent.0.required = ((min(((((blur_y.extent.0 + -1)/256)*256) + 256), blur_y.extent.0) + blur_y.min.0) - min(blur_y.min.0, ((blur_y.min.0 + blur_y.extent.0) + -256)))
+let blur_y.min.0.required = min(blur_y.min.0, ((blur_y.min.0 + blur_y.extent.0) + -256))
+let blur_y.extent.1.required = ((min(((((blur_y.extent.1 + -1)/32)*32) + 32), blur_y.extent.1) + blur_y.min.1) - min(blur_y.min.1, ((blur_y.min.1 + blur_y.extent.1) + -32)))
+let blur_y.min.1.required = min(blur_y.min.1, ((blur_y.min.1 + blur_y.extent.1) + -32))
+assert((!_halide_buffer_is_bounds_query(b0.buffer) || ((1 <= b0.min.0.required.s) && ((b0.min.0.required.s + b0.extent.0.required.s) <= 2047))), halide_error_constraints_make_required_region_smaller("Input buffer b0", 0, 0, 2047, (b0.min.0.required.s + -1), (b0.min.0.required.s + b0.extent.0.required.s)))
+assert((!_halide_buffer_is_bounds_query(b0.buffer) || ((1 <= blur_y.min.1) && ((blur_y.min.1 + blur_y.extent.1) <= 1364))), halide_error_constraints_make_required_region_smaller("Input buffer b0", 1, 0, 1364, (blur_y.min.1 + -1), (blur_y.min.1 + blur_y.extent.1)))
+if (_halide_buffer_is_bounds_query(b0.buffer)) {
+  _halide_buffer_init(b0.buffer, _halide_buffer_get_shape(b0.buffer), reinterpret((void *), (uint64)0), (uint64)0, reinterpret((halide_device_interface_t *), (uint64)0), 1, 8, 2, make_struct((halide_dimension_t *), 0, 2048, 1, 0, 0, 1365, 2048, 0), (uint64)0)
+}
+if (_halide_buffer_is_bounds_query(blur_y.buffer)) {
+  _halide_buffer_init(blur_y.buffer, _halide_buffer_get_shape(blur_y.buffer), reinterpret((void *), (uint64)0), (uint64)0, reinterpret((halide_device_interface_t *), (uint64)0), 1, 8, 2, make_struct((halide_dimension_t *), blur_y.min.0.required, blur_y.extent.0.required, 1, 0, blur_y.min.1.required, blur_y.extent.1.required, blur_y.extent.0.required, 0), (uint64)0)
+}
+if (!(_halide_buffer_is_bounds_query(b0.buffer) || _halide_buffer_is_bounds_query(blur_y.buffer))) {
+  assert((((b0.type.code == (uint8)1) && (b0.type.bits == (uint8)8)) && (b0.type.lanes == (uint16)1)), halide_error_bad_type("Input buffer b0", b0.type.code, (uint8)1, b0.type.bits, (uint8)8, b0.type.lanes, (uint16)1))
+  assert((((blur_y.type.code == (uint8)1) && (blur_y.type.bits == (uint8)8)) && (blur_y.type.lanes == (uint16)1)), halide_error_bad_type("Output buffer blur_y", blur_y.type.code, (uint8)1, blur_y.type.bits, (uint8)8, blur_y.type.lanes, (uint16)1))
+  assert((((b0.min.0 + 1) <= b0.min.0.required.s) && ((((b0.min.0.required.s + b0.extent.0.required.s) - b0.extent.0) + 1) <= b0.min.0)), halide_error_access_out_of_bounds("Input buffer b0", 0, (b0.min.0.required.s + -1), (b0.min.0.required.s + b0.extent.0.required.s), b0.min.0, ((b0.min.0 + b0.extent.0) + -1)))
+  assert((0 <= b0.extent.0), halide_error_buffer_extents_negative("Input buffer b0", 0, b0.extent.0))
+  assert((((b0.min.1 + 1) <= blur_y.min.1) && ((((blur_y.min.1 + blur_y.extent.1) - b0.extent.1) + 1) <= b0.min.1)), halide_error_access_out_of_bounds("Input buffer b0", 1, (blur_y.min.1 + -1), (blur_y.min.1 + blur_y.extent.1), b0.min.1, ((b0.min.1 + b0.extent.1) + -1)))
+  assert((0 <= b0.extent.1), halide_error_buffer_extents_negative("Input buffer b0", 1, b0.extent.1))
+  assert(((blur_y.min.0 <= blur_y.min.0.required) && (((blur_y.min.0.required + blur_y.extent.0.required) - blur_y.extent.0) <= blur_y.min.0)), halide_error_access_out_of_bounds("Output buffer blur_y", 0, blur_y.min.0.required, ((blur_y.min.0.required + blur_y.extent.0.required) + -1), blur_y.min.0, ((blur_y.min.0 + blur_y.extent.0) + -1)))
+  assert((0 <= blur_y.extent.0), halide_error_buffer_extents_negative("Output buffer blur_y", 0, blur_y.extent.0))
+  assert(((blur_y.min.1 <= blur_y.min.1.required) && (((blur_y.min.1.required + blur_y.extent.1.required) - blur_y.extent.1) <= blur_y.min.1)), halide_error_access_out_of_bounds("Output buffer blur_y", 1, blur_y.min.1.required, ((blur_y.min.1.required + blur_y.extent.1.required) + -1), blur_y.min.1, ((blur_y.min.1 + blur_y.extent.1) + -1)))
+  assert((0 <= blur_y.extent.1), halide_error_buffer_extents_negative("Output buffer blur_y", 1, blur_y.extent.1))
+  assert((b0.stride.0 == 1), halide_error_constraint_violated("b0.stride.0", b0.stride.0, "1", 1))
+  assert((b0.min.0 == 0), halide_error_constraint_violated("b0.min.0", b0.min.0, "0", 0))
+  assert((b0.extent.0 == 2048), halide_error_constraint_violated("b0.extent.0", b0.extent.0, "2048", 2048))
+  assert((b0.stride.1 == 2048), halide_error_constraint_violated("b0.stride.1", b0.stride.1, "2048", 2048))
+  assert((b0.min.1 == 0), halide_error_constraint_violated("b0.min.1", b0.min.1, "0", 0))
+  assert((b0.extent.1 == 1365), halide_error_constraint_violated("b0.extent.1", b0.extent.1, "1365", 1365))
+  assert((blur_y.stride.0 == 1), halide_error_constraint_violated("blur_y.stride.0", blur_y.stride.0, "1", 1))
+  let blur_y.total_extent.1 = (int64(blur_y.extent.1)*int64(blur_y.extent.0))
+  assert((abs(int64(blur_y.extent.0)) <= (uint64)2147483647), halide_error_buffer_allocation_too_large("blur_y", abs(int64(blur_y.extent.0)), (uint64)2147483647))
+  assert((abs((int64(blur_y.extent.1)*int64(blur_y.stride.1))) <= (uint64)2147483647), halide_error_buffer_allocation_too_large("blur_y", abs((int64(blur_y.extent.1)*int64(blur_y.stride.1))), (uint64)2147483647))
+  assert((blur_y.total_extent.1 <= (int64)2147483647), halide_error_buffer_extents_too_large("blur_y", blur_y.total_extent.1, (int64)2147483647))
+  assert((b0 != reinterpret((void *), (uint64)0)), halide_error_host_is_null("Input buffer b0"))
+  assert((blur_y != reinterpret((void *), (uint64)0)), halide_error_host_is_null("Output buffer blur_y"))
+  produce blur_y {
+    halide_profiler_set_current_func(profiler_state, profiler_token, 1)
+    halide_profiler_decr_active_threads(profiler_state)
+    let t26 = ((blur_y.extent.1 + 31)/32)
+    let t28 = ((blur_y.extent.0 + 255)/256)
+    let t27 = ((blur_y.min.1 + blur_y.extent.1) + -32)
+    let t29 = ((blur_y.min.0 + blur_y.extent.0) + -256)
+    let t30 = (blur_y.min.0 + (blur_y.min.1*blur_y.stride.1))
+    parallel (blur_y.s0.y.y, 0, t26) {
+      halide_profiler_incr_active_threads(profiler_state)
+      let blur_y.s0.y.yi.base = min((blur_y.min.1 + (blur_y.s0.y.y*32)), t27)
+      for (blur_y.s0.x.x, 0, t28) {
+        let blur_y.s0.x.xi.base = min((blur_y.min.0 + (blur_y.s0.x.x*256)), t29)
+        allocate blur_x[uint8 * 256 * 34]
+        produce blur_x {
+          halide_profiler_set_current_func(profiler_state, profiler_token, 2)
+          for (blur_x.s0.y, (blur_y.s0.y.yi.base + -1), 34) {
+            let t34 = ((blur_x.s0.y - blur_y.s0.y.yi.base)*32)
+            let t33 = (blur_y.s0.x.xi.base + (blur_x.s0.y*2048))
+            for (blur_x.s0.x.x, 0, 32) {
+              blur_x[ramp((((t34 + blur_x.s0.x.x)*8) + 256), 1, 8)] = (((b0[ramp(((t33 + (blur_x.s0.x.x*8)) + -1), 1, 8)] + b0[ramp((t33 + (blur_x.s0.x.x*8)), 1, 8)]) + b0[ramp(((t33 + (blur_x.s0.x.x*8)) + 1), 1, 8)])/x8((uint8)3))
+            }
+          }
+        }
+        halide_profiler_set_current_func(profiler_state, profiler_token, 1)
+        let t35 = (blur_y.s0.x.xi.base - t30)
+        for (blur_y.s0.y.yi, 0, 32) {
+          let t36 = (blur_y.s0.y.yi*32)
+          let t37 = (t35 + ((blur_y.s0.y.yi.base + blur_y.s0.y.yi)*blur_y.stride.1))
+          for (blur_y.s0.x.xi.xi, 0, 32) {
+            blur_y[ramp((t37 + (blur_y.s0.x.xi.xi*8)), 1, 8)] = (((blur_x[ramp(((t36 + blur_y.s0.x.xi.xi)*8), 1, 8)] + blur_x[ramp((((t36 + blur_y.s0.x.xi.xi)*8) + 256), 1, 8)]) + blur_x[ramp((((t36 + blur_y.s0.x.xi.xi)*8) + 512), 1, 8)])/x8((uint8)3))
+          }
+        }
+        free blur_x
+      }
+      halide_profiler_decr_active_threads(profiler_state)
+    }
+    halide_profiler_incr_active_threads(profiler_state)
+  }
+}
+halide_profiler_decr_active_threads(profiler_state)
+free profiling_func_stack_peak_buf
+free profiling_func_names
