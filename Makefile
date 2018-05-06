@@ -19,4 +19,4 @@ likwid_test: likwid_test.c
 	${CC} -fopenmp -DLIKWID_PERFMON -L ${LIKWID_LIB} -I ${LIKWID_INCLUDE} $^ -o $@ -llikwid
 
 clean:
-	rm blur_3x3 likwid_test
+	rm -f blur_3x3 likwid_test
