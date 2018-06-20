@@ -13,7 +13,7 @@ LIKWID_INCLUDE=${LIKWID_PATH}/../include
 all: blur_3x3
 
 blur_3x3: blur_3x3.cpp
-	${CXX} $^ -g -I ${HALIDE_PATH}/include -I ${HALIDE_PATH}/tools -L ${HALIDE_PATH}/bin -lHalide -lpthread -ljpeg `libpng-config --cflags --ldflags` -ldl -o $@ -std=c++11
+	${CXX} $^ -g -I ${HALIDE_PATH}/include -I ${HALIDE_PATH}/tools -L ${HALIDE_PATH}/bin -lHalide -lpapi -lpthread -ljpeg `libpng-config --cflags --ldflags` -ldl -o $@ -std=c++11
 
 likwid_test: likwid_test.c
 	${CC} -fopenmp -DLIKWID_PERFMON -L ${LIKWID_LIB} -I ${LIKWID_INCLUDE} $^ -o $@ -llikwid
